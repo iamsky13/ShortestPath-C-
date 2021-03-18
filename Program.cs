@@ -6,7 +6,7 @@ namespace ShortestPath
     {
         public int NodeId { get; set; }
         public uint Distance { get; set; } = uint.MaxValue;
-        public Nodes Predecceor { get; set; } = null;
+        public Nodes Predecessor { get; set; } = null;
         public bool IsNodeChecked { get; set; }
     }
     class Program
@@ -36,14 +36,14 @@ namespace ShortestPath
 
             while (true)
             {
-                if(!CheckPredecceorExist(result[shortestPathNodes[hops]]))
+                if(!CheckPredecessorExist(result[shortestPathNodes[hops]]))
                 {
                     Console.WriteLine("no valid path");
                     break;
                 }
-                else if(result[shortestPathNodes[hops]].Predecceor.NodeId != source)
+                else if(result[shortestPathNodes[hops]].Predecessor.NodeId != source)
                 {
-                    shortestPathNodes[hops + 1] = result[shortestPathNodes[hops]].Predecceor.NodeId;
+                    shortestPathNodes[hops + 1] = result[shortestPathNodes[hops]].Predecessor.NodeId;
                     ++hops;
                 }
                 else
@@ -68,9 +68,9 @@ namespace ShortestPath
             
         
 
-        private static bool CheckPredecceorExist(Nodes node)
+        private static bool CheckPredecessorExist(Nodes node)
         {
-            return node.Predecceor != null;
+            return node.Predecessor != null;
         }
 
         private static Nodes[] ApplyDijkstra(int source)
@@ -86,7 +86,7 @@ namespace ShortestPath
                 };
             }
             Nodes[source].Distance = 0;
-            Nodes[source].Predecceor = null;
+            Nodes[source].Predecessor = null;
 
             for (int count=0;count< Nodes.Length - 1; count++)
             {
@@ -102,7 +102,7 @@ namespace ShortestPath
                         Nodes[activeNode].Distance + Graph[activeNode][n] < Nodes[n].Distance)
                     {
                         Nodes[n].Distance = Nodes[activeNode].Distance + Graph[activeNode][n];
-                        Nodes[n].Predecceor = Nodes[activeNode];
+                        Nodes[n].Predecessor = Nodes[activeNode];
                     }
                 }
             }
