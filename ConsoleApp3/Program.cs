@@ -5,6 +5,9 @@ namespace ShortestPath
     public class Nodes
     {
         public int NodeId { get; set; }
+        //uint has been used vecause all our distances 
+        //are positive and uint has higher 
+        //range compared to int for positive integer
         public uint Distance { get; set; } = uint.MaxValue;
         public Nodes Predecessor { get; set; } = null;
         public bool IsNodeChecked { get; set; }
