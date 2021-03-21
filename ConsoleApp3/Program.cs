@@ -14,7 +14,7 @@ namespace ShortestPath
     }
     class Program
     {
-        //adjancy matrix of Graph
+        //adjacency  matrix of Graph
         static uint[][] Graph = new uint[][]
            {
            new uint[]{0, 2, 3, 0, 0, 0, 0,},
@@ -82,7 +82,7 @@ namespace ShortestPath
 
         private static Nodes[] ApplyDijkstra(int source)
         {
-            //Converted adjancy matrix to array of nodes
+            //Converted adjacency  matrix to array of nodes
             Nodes[] Nodes = new Nodes[Graph[1].Length];
             for(int i = 0; i < Nodes.Length; i++)
             {
