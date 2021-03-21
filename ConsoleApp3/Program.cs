@@ -11,21 +11,22 @@ namespace ShortestPath
     }
     class Program
     {
+        //adjancy matrix of Graph
         static uint[][] Graph = new uint[][]
-        {
-            new uint[]{0, 5, 0, 0, 0, 0, 0, 0},
-            new uint[]{7, 0, 0, 11, 11, 0, 0, 0},
-            new uint[]{0, 0, 0, 0, 0, 0, 42, 5},
-            new uint[]{0, 3, 0, 0, 1, 0, 0, 0},
-            new uint[]{11, 11, 3, 3, 0, 0, 0, 0},
-            new uint[]{0, 0, 0, 0, 0, 0, 0, 0},
-            new uint[]{0, 0, 42, 0, 0, 5, 0, 0},
-            new uint[]{0, 0, 42, 0, 0, 0, 0, 0},
-        };
+           {
+           new uint[]{0, 2, 3, 0, 0, 0, 0,},
+            new uint[]{7, 0, 0, 1, 0, 0, 3,},
+            new uint[]{3, 0, 0, 0, 0, 0, 5,},
+            new uint[]{0, 0, 0, 0, 0, 2, 2,},
+            new uint[]{0, 0, 0, 0, 0, 0, 0,},
+            new uint[]{0, 0, 0, 1, 11, 0, 7,},
+            new uint[]{0, 0, 0, 0, 2, 7, 0,}
+           };
         static void Main(string[] args)
         {
-            int destination = 1;
-            int source = 4;
+            //assign destination node and source node that belongs to Graph
+            int destination = 3;
+            int source = 2;
 
             var result = ApplyDijkstra(source);
            
@@ -36,16 +37,19 @@ namespace ShortestPath
 
             while (true)
             {
+                //if destination node has no predecessor then there will be no valid path
                 if(!CheckPredecessorExist(result[shortestPathNodes[hops]]))
                 {
                     Console.WriteLine("no valid path");
                     break;
                 }
+                //we went from destination to source to find the best path and hops
                 else if(result[shortestPathNodes[hops]].Predecessor.NodeId != source)
                 {
                     shortestPathNodes[hops + 1] = result[shortestPathNodes[hops]].Predecessor.NodeId;
                     ++hops;
                 }
+                //if we reach till here we have found the shortest path
                 else
                 {
                     ++hops;
@@ -63,7 +67,7 @@ namespace ShortestPath
                
             }
 
-            
+            Console.ReadLine();
          }
             
         
@@ -75,7 +79,7 @@ namespace ShortestPath
 
         private static Nodes[] ApplyDijkstra(int source)
         {
-            
+            //Converted adjancy matrix to array of nodes
             Nodes[] Nodes = new Nodes[Graph[1].Length];
             for(int i = 0; i < Nodes.Length; i++)
             {
@@ -90,12 +94,15 @@ namespace ShortestPath
 
             for (int count=0;count< Nodes.Length - 1; count++)
             {
+                //FindNewNearestNode will discover new shortest node
                 var activeNode = FindNewNearestNode(Nodes);
 
+                //assign this node as not new 
                 Nodes[activeNode].IsNodeChecked = true;
 
                 for (int n = 0; n < Nodes.Length; n++)
                 {
+                    //here we update the shortest path, predecessor if the new Distance is less than current best distance
                     if (!Nodes[n].IsNodeChecked &&
                         Graph[activeNode][n] != 0 &&
                         Nodes[activeNode].Distance != uint.MaxValue &&
@@ -117,6 +124,7 @@ namespace ShortestPath
 
             for(int n = 0; n < nodes.Length; n++)
             {
+                //IsNodeChecked will verify if it is new node or not
                 if(!nodes[n].IsNodeChecked && nodes[n].Distance <= minPathDistance)
                 {
                     minPathDistance = nodes[n].Distance;
